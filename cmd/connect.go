@@ -46,7 +46,7 @@ var connectCmd = &cobra.Command{
 				selectedServer = config.Servers[0]
 			} else {
 				var err error
-				selectedServer, err = selectServer()
+				selectedServer, err = SelectServer()
 				if err != nil {
 					return err
 				}
@@ -58,7 +58,7 @@ var connectCmd = &cobra.Command{
 	},
 }
 
-func selectServer() (models.Server, error) {
+func SelectServer() (models.Server, error) {
 	options := make([]huh.Option[int], len(config.Servers))
 	for i, server := range config.Servers {
 		label := fmt.Sprintf("%-20s %s@%s:%d",

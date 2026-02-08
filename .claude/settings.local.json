@@ -2,7 +2,12 @@
   "permissions": {
     "allow": [
       "Bash(go build:*)",
-      "Bash(go get:*)"
+      "Bash(go get:*)",
+      "Bash(pacman -S:*)",
+      "Bash(echo:*)",
+      "Bash(ssh:*)",
+      "Bash(rsync:*)",
+      "Bash(scp:*)"
     ]
   }
 }
