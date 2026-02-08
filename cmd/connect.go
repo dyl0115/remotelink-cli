@@ -6,8 +6,10 @@ import (
 	"os/exec"
 	"remotelink/config"
 	"remotelink/models"
+	remotessh "remotelink/ssh"
 
 	"github.com/charmbracelet/huh"
+	"github.com/charmbracelet/huh/spinner"
 	"github.com/spf13/cobra"
 )
 
@@ -92,6 +94,27 @@ func selectServer() (models.Server, error) {
 }
 
 func selectTarget(server models.Server) error {
+	// 실시간으로 컨테이너 목록 조회
+	var containers []models.Container
+	var fetchErr error
+
+	err := spinner.New().
+		Title(fmt.Sprintf("Fetching containers from %s...", server.ServerName)).
+		Action(func() {
+			containers, fetchErr = remotessh.FetchContainers(server)
+		}).
+		Run()
+
+	if err != nil {
+		return err
+	}
+
+	if fetchErr != nil {
+		fmt.Printf("⚠️  Could not fetch containers: %v\n", fetchErr)
+		fmt.Println("   Connecting to host directly...")
+		return connectToServer(server)
+	}
+
 	// 접속 대상 목록 생성: Host + Containers
 	type target struct {
 		label       string
@@ -107,13 +130,19 @@ func selectTarget(server models.Server) error {
 		},
 	}
 
-	// 컨테이너 추가
-	for _, container := range server.Containers {
+	// 실시간 조회된 컨테이너 추가
+	for _, container := range containers {
 		targets = append(targets, target{
 			label:       fmt.Sprintf("🐳 %s (%s)", container.ContainerName, container.ImageName),
 			isContainer: true,
 			name:        container.ContainerName,
 		})
+	}
+
+	// 컨테이너가 없으면 바로 호스트 접속
+	if len(containers) == 0 {
+		fmt.Println("No running containers found. Connecting to host...")
+		return connectToServer(server)
 	}
 
 	// 선택 옵션 생성

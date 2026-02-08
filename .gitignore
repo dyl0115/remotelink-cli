@@ -31,3 +31,6 @@ auth.yaml
 .idea/
 .vscode/
 *.swp
+
+# --- 클로드 ---
+.cluade

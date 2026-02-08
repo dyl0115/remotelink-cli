@@ -6,7 +6,6 @@ type Server struct {
 	Port        int         `mapstructure:"port" json:"port"`
 	Username    string      `mapstructure:"username" json:"username"`
 	KeyPath     string      `mapstructure:"key_path" json:"key_path"`
-	Password    string      `mapstructure:"password" json:"password"`
 	DefaultPath string      `mapstructure:"default_path" json:"default_path"`
 	Containers  []Container `mapstructure:"containers" json:"containers"`
 }

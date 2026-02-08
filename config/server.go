@@ -62,7 +62,6 @@ func createDefaultConfig() error {
 				"port":         22,
 				"username":     "your-username1",
 				"key_path":     "~/.ssh/id_rsa",
-				"password":     "",
 				"default_path": "/home/user",
 				"containers": []map[string]interface{}{
 					{
@@ -77,7 +76,6 @@ func createDefaultConfig() error {
 				"port":         22,
 				"username":     "your-username2",
 				"key_path":     "~/.ssh/id_rsa",
-				"password":     "",
 				"default_path": "/home/user",
 				"containers":   []map[string]interface{}{},
 			},
