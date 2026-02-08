@@ -1,0 +1,33 @@
+# --- Go 관련 ---
+# 빌드된 바이너리 파일 (Cobra로 빌드한 실행 파일)
+bin/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# 의존성 및 캐시
+vendor/
+go.sum
+
+# --- Viper 설정 관련 (매우 중요) ---
+# 로컬 개발용 설정 파일 (비밀번호, 토큰 등이 포함될 수 있음)
+config.yaml
+config.json
+.env
+*.env
+auth.yaml
+
+# 대신 샘플 파일은 올릴 수 있도록 제외 (예: config.sample.yaml)
+!config.sample.yaml
+
+# --- Bubble Tea / UI 관련 ---
+# 터미널 상태 기록이나 로그 파일
+*.log
+
+# --- OS 및 에디터 관련 ---
+.DS_Store
+.idea/
+.vscode/
+*.swp
